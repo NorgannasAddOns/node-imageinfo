@@ -11,7 +11,7 @@ Currently it supports Png, Jpeg, Gif and Swf analysis.
 	var imageinfo = require('imageinfo'),
 		fs = require('fs');
 
-	fs.readfile('testimage', function(err, data) {
+	fs.readFile('testimage', function(err, data) {
 		if (err) throw err;
 
 		info = imageinfo(data);
