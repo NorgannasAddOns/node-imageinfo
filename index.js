@@ -131,13 +131,21 @@ function imageInfoSwf(buffer) {
 		val;
 
 	if (buffer[0] === 0x43) {
-		// Can't get width/height of compressed flash files... yet (need zlib)
-		return {
-			type: 'flash',
-			format: 'SWF',
-			mimeType: 'application/x-shockwave-flash',
-			width: null,
-			height: null,
+		try {
+			// If you have zlib available ( npm install zlib ) then we can read compressed flash files
+			buffer = require('zlib').inflate(buffer.slice(8, 100));
+			pos = 0;
+			console.log("inflated buffer", buffer);
+		}
+		catch (ex) {
+			// Can't get width/height of compressed flash files... yet (need zlib)
+			return {
+				type: 'flash',
+				format: 'SWF',
+				mimeType: 'application/x-shockwave-flash',
+				width: null,
+				height: null,
+			}
 		}
 	}
 
