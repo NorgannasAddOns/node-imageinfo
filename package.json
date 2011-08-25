@@ -1,0 +1,28 @@
+{
+	"name": "imageinfo",
+		"description": "A node.js package that returns information about an image or flash file such as type, dimensions etc.",
+		"version": "1.0.0",
+		"author": "Norganna <ken@norganna.com>",
+		"repository": {
+			"type": "git",
+			"url": "git://github.com/NorgannasAddOns/node-imageinfo.git"
+		},
+		"bugs": {
+			"url": "https://github.com/NorgannasAddOns/node-imageinfo/issues"
+		},
+		"main": "index",
+		"keywords": [
+			"image", "info", "jpg", "jpeg", "png", "gif", "swf", "dimensions", "size", "type", "mime", "format"
+		],
+		"engines": {
+			"node": ">=0.4"
+		},
+		"dependencies": {},
+		"devDependencies": {},
+		"directories": {
+			"lib": ".",
+			"test": "test"
+		}
+}
+
+
