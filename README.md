@@ -10,6 +10,8 @@ If you also have zlib available (`npm install zlib`) then it will support compre
 
 ## Usage:
 
+To install imageinfo into your project, use `npm install imageinfo`, then it's simply a matter of calling it with the buffer object containing your image, like this:
+
 	var imageinfo = require('imageinfo'),
 		fs = require('fs');
 
