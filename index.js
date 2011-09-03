@@ -5,10 +5,16 @@ function readUInt32(buffer, offset, bigEndian) {
 
 	var value;
 	if (bigEndian) {
-		value = (this[offset] << 24) + (this[offset+1] << 16) + (this[offset+2] << 8) + this[offset+3];
+		if (buffer.readUInt32BE) {
+			return buffer.readUInt32BE(offset);
+		}
+		value = (buffer[offset] << 24) + (buffer[offset+1] << 16) + (buffer[offset+2] << 8) + buffer[offset+3];
 	}
 	else {
-		value = this[offset] + (this[offset+1] << 8) + (this[offset+2] << 16) + (this[offset+3] << 24);
+		if (buffer.readUInt32LE) {
+			return buffer.readUInt32LE(offset);
+		}
+		value = buffer[offset] + (buffer[offset+1] << 8) + (buffer[offset+2] << 16) + (buffer[offset+3] << 24);
 	}
 	return value;
 }
@@ -20,10 +26,16 @@ function readUInt16(buffer, offset, bigEndian) {
 
 	var value;
 	if (bigEndian) {
-		value = (this[offset] << 8) + this[offset+1];
+		if (buffer.readUInt16BE) {
+			return buffer.readUInt16BE(offset);
+		}
+		value = (buffer[offset] << 8) + buffer[offset+1];
 	}
 	else {
-		value = this[offset] + (this[offset+1] << 8);
+		if (buffer.readUInt16LE) {
+			return buffer.readUInt16LE(offset);
+		}
+		value = buffer[offset] + (buffer[offset+1] << 8);
 	}
 	return value;
 }
@@ -131,20 +143,13 @@ function imageInfoSwf(buffer) {
 		val;
 
 	if (buffer[0] === 0x43) {
-		try {
-			// If you have zlib available ( npm install zlib ) then we can read compressed flash files
-			buffer = require('zlib').inflate(buffer.slice(8, 100));
-			pos = 0;
-		}
-		catch (ex) {
-			// Can't get width/height of compressed flash files... yet (need zlib)
-			return {
-				type: 'flash',
-				format: 'SWF',
-				mimeType: 'application/x-shockwave-flash',
-				width: null,
-				height: null,
-			}
+		// Can't get width/height of compressed flash files... yet (need zlib)
+		return {
+			type: 'flash',
+			format: 'SWF',
+			mimeType: 'application/x-shockwave-flash',
+			width: null,
+			height: null,
 		}
 	}
 
@@ -204,7 +209,7 @@ function checkSig(buffer, offset, sig) {
 
 module.exports = function imageInfo(buffer, path) {
 	var pngSig = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
-	var jpgSig = [0xff, 0xd8, 0xff, 0xe0];
+	var jpgSig = [0xff, 0xd8, 0xff];
 	var gifSig = [0x47, 0x49, 0x46, 0x38, [0x37, 0x39], 0x61];
 	var swfSig = [[0x46, 0x43], 0x57, 0x53];
 
