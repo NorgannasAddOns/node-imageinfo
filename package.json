@@ -2,7 +2,7 @@
 	"name": "imageinfo",
 		"description": "A node.js package that returns information about an image or flash file such as type, dimensions etc.",
 		"homepage": "https://github.com/NorgannasAddOns/node-imageinfo",
-		"version": "1.0.2",
+		"version": "1.0.4",
 		"author": "Norganna <ken@norganna.com>",
 		"repository": {
 			"type": "git",
